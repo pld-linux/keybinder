@@ -8,7 +8,7 @@ Summary:	keybinder library
 Summary(pl.UTF-8):	Biblioteka keybinder
 Name:		keybinder
 Version:	0.3.0
-Release:	3
+Release:	4
 License:	GPL v2
 Group:		Libraries
 Source0:	http://kaizer.se/publicfiles/keybinder/%{name}-%{version}.tar.gz
@@ -88,7 +88,7 @@ Requires:	%{name} = %{version}-%{release}
 Requires:	python-libs
 Requires:	python-modules
 Requires:	python-pygobject >= 2.15.3
-Requires:	python-pygtk >= 2:2.12
+Requires:	python-pygtk-gtk >= 2:2.12
 
 %description -n python-keybinder
 Python bindings for keybinder library.
