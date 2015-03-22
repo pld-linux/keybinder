@@ -8,7 +8,7 @@ Summary:	keybinder library
 Summary(pl.UTF-8):	Biblioteka keybinder
 Name:		keybinder
 Version:	0.3.0
-Release:	4
+Release:	5
 License:	GPL v2
 Group:		Libraries
 Source0:	http://kaizer.se/publicfiles/keybinder/%{name}-%{version}.tar.gz
