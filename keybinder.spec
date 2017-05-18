@@ -1,19 +1,22 @@
 #
 # Conditional build:
-%bcond_without	lua		# don't build Lua bindings
-%bcond_without	python		# don't build Python bindings
-%bcond_without	static_libs	# static library build
+%bcond_without	lua		# Lua bindings
+%bcond_without	python		# Python bindings
+%bcond_without	static_libs	# static library
 #
 Summary:	keybinder library
 Summary(pl.UTF-8):	Biblioteka keybinder
 Name:		keybinder
-Version:	0.3.0
-Release:	6
+Version:	0.3.1
+Release:	1
 License:	GPL v2
 Group:		Libraries
-Source0:	http://kaizer.se/publicfiles/keybinder/%{name}-%{version}.tar.gz
-# Source0-md5:	2a0aed62ba14d1bf5c79707e20cb4059
-URL:		http://kaizer.se/wiki/keybinder/
+#Source0Download: https://github.com/kupferlauncher/keybinder/releases
+Source0:	https://github.com/kupferlauncher/keybinder/releases/download/v%{version}/%{name}-%{version}.tar.gz
+# Source0-md5:	a6d7caae0dcb040b08692b008a68a507
+# dead
+#URL:		http://kaizer.se/wiki/keybinder/
+URL:		https://github.com/kupferlauncher/keybinder
 BuildRequires:	gobject-introspection-devel >= 0.6.7
 BuildRequires:	gtk-doc >= 1.14
 BuildRequires:	gtk+2-devel >= 2:2.20
@@ -33,6 +36,7 @@ BuildRequires:	python-pygtk-devel >= 2:2.12
 BuildRequires:	rpm-pythonprov
 BuildRequires:	rpmbuild(macros) >= 1.219
 %endif
+Requires:	gtk+2 >= 2:2.20
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -133,9 +137,12 @@ install -d $RPM_BUILD_ROOT%{_examplesdir}/%{name}-%{version}
 
 cp -a examples/* $RPM_BUILD_ROOT%{_examplesdir}/%{name}-%{version}
 
+# obsoleted by pkg-config
+%{__rm} $RPM_BUILD_ROOT%{_libdir}/libkeybinder.la
+
 %if %{with python}
-%py_ocomp $RPM_BUILD_ROOT%{py_sitedir}
 %py_comp $RPM_BUILD_ROOT%{py_sitedir}
+%py_ocomp $RPM_BUILD_ROOT%{py_sitedir}
 %py_postclean
 %{__rm} $RPM_BUILD_ROOT%{py_sitedir}/keybinder/*.la
 %{?with_static_libs:%{__rm} $RPM_BUILD_ROOT%{py_sitedir}/keybinder/*.a}
@@ -155,14 +162,13 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(644,root,root,755)
 %doc AUTHORS NEWS README
-%attr(755,root,root) %ghost %{_libdir}/libkeybinder.so.0
 %attr(755,root,root) %{_libdir}/libkeybinder.so.*.*.*
+%attr(755,root,root) %ghost %{_libdir}/libkeybinder.so.0
 %{_libdir}/girepository-1.0/Keybinder-0.0.typelib
 
 %files devel
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/libkeybinder.so
-%{_libdir}/libkeybinder.la
 %{_datadir}/gir-1.0/Keybinder-0.0.gir
 %{_includedir}/keybinder.h
 %{_pkgconfigdir}/keybinder.pc
